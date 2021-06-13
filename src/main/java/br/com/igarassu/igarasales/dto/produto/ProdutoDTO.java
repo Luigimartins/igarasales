@@ -1,11 +1,6 @@
-package br.com.igarassu.igarasales.domain.produto;
+package br.com.igarassu.igarasales.dto.produto;
 
 import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 import br.com.igarassu.igarasales.domain.categoria.Categoria;
 import lombok.AllArgsConstructor;
@@ -17,16 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-public class Produto implements Serializable {
+public class ProdutoDTO implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+
     private Integer codigo;
     private String nome;
     private String descricao;
     private Categoria categoria;
-    
+
 }
