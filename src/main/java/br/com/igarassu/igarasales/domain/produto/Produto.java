@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import br.com.igarassu.igarasales.domain.categoria.Categoria;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class Produto implements Serializable {
     private Integer codigo;
     private String nome;
     private String descricao;
+    @ManyToOne
     private Categoria categoria;
     
 }

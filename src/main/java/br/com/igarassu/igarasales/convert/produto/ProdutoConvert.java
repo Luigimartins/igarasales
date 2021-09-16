@@ -21,7 +21,7 @@ public class ProdutoConvert {
         return ProdutoDTO.builder().codigo(domain.getCodigo())
                                    .nome(domain.getNome())
                                    .descricao(domain.getDescricao())
-                                //    .categoria(domain.getCategoria())
+                                   .categoria(domain.getCategoria())
                                    .build();
     }
 

@@ -9,7 +9,7 @@ public interface ProdutoService {
     List<ProdutoDTO> listarProdutos();
     ProdutoDTO buscarProdutoPorId(Integer codigoProduto) throws Exception;
 
-    ProdutoDTO adicionaProduto(ProdutoFormDTO produtoForm);
+    ProdutoDTO adicionaProduto(ProdutoFormDTO produtoForm) throws Exception;
     ProdutoDTO editarProduto(Integer codigoProduto, ProdutoFormDTO produtoForm) throws Exception;
  
     void excluirProduto(Integer codigoProduto) throws Exception;

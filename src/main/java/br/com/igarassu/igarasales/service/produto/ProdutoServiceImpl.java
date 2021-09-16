@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import br.com.igarassu.igarasales.convert.produto.ProdutoConvert;
 import br.com.igarassu.igarasales.domain.produto.Produto;
+import br.com.igarassu.igarasales.domain.categoria.Categoria;
 import br.com.igarassu.igarasales.dto.produto.ProdutoDTO;
 import br.com.igarassu.igarasales.dto.produto.ProdutoFormDTO;
 import br.com.igarassu.igarasales.repository.produto.ProdutoRepository;
+import br.com.igarassu.igarasales.repository.categoria.CategoriaRepository;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -17,6 +19,7 @@ import lombok.AllArgsConstructor;
 public class ProdutoServiceImpl implements ProdutoService{
 
     private final ProdutoRepository produtoRepository;
+    private final CategoriaRepository categoriaRepository;
 
     @Override
     public List<ProdutoDTO> listarProdutos() {
@@ -36,8 +39,15 @@ public class ProdutoServiceImpl implements ProdutoService{
     }
 
     @Override
-    public ProdutoDTO adicionaProduto(ProdutoFormDTO produtoForm) {
+    public ProdutoDTO adicionaProduto(ProdutoFormDTO produtoForm) throws Exception {
+        Optional<Categoria> categoriaOpt = categoriaRepository.findById(produtoForm.getCategoriaId());
+        
+        if (!categoriaOpt.isPresent()){
+            throw new Exception("Categoria não encontrada");
+        }
+
         Produto entity = ProdutoConvert.produtoFormToCategoriaEntity(produtoForm);
+        entity.setCategoria(categoriaOpt.get());
         produtoRepository.save(entity);
 
         return ProdutoConvert.produtoDomainToDTO(entity);
@@ -46,16 +56,21 @@ public class ProdutoServiceImpl implements ProdutoService{
     @Override
     public ProdutoDTO editarProduto(Integer codigoProduto, ProdutoFormDTO produtoForm) throws Exception {
         Optional<Produto> produtoOpt = produtoRepository.findById(codigoProduto);
-    
+
         if (!produtoOpt.isPresent()){
             throw new Exception("Produto não encontrado");
         }
 
-        Produto entity = produtoOpt.get();
+        Optional<Categoria> categoriaOpt = categoriaRepository.findById(produtoForm.getCategoriaId());
+        
+        if (!categoriaOpt.isPresent()){
+            throw new Exception("Categoria não encontrada");
+        }
 
+        Produto entity = produtoOpt.get();
         entity.setNome(produtoForm.getNome());
         entity.setDescricao(produtoForm.getDescricao());
-        entity.setCategoria(produtoForm.getCategoria());
+        entity.setCategoria(categoriaOpt.get());
         produtoRepository.save(entity);
 
         return ProdutoConvert.produtoDomainToDTO(produtoOpt.get()); 

@@ -2,6 +2,7 @@ package br.com.igarassu.igarasales.dto.produto;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import br.com.igarassu.igarasales.domain.categoria.Categoria;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +18,7 @@ public class ProdutoFormDTO implements Serializable{
 
     private String nome;
     private String descricao;
-    private Categoria categoria;
+    @JsonProperty("categoria_id")
+    private Integer categoriaId;
     
 }
